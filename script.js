@@ -1,7 +1,15 @@
 const chatBody = document.querySelector(".chat-body");
 const messageInput = document.querySelector(".message-input");
 const sendMessageButton = document.querySelector("#send-message");
-const fileInput = document.querySelector("#file-input");
+// const fileInput = document.querySelector("#file-input");
+const startChat = document.querySelector(".start-chat");
+const chatBotPopUp = document.querySelector(".chatbot-popup");
+
+startChat.addEventListener("click", () => {
+    chatBotPopUp.style.display = "block";
+    startChat.style.display = "none";
+})
+
 const userData = {
     message : null,
     file : {
@@ -93,35 +101,35 @@ messageInput.addEventListener("keydown", (e) => {
 
 });
 
-fileInput.addEventListener("change", () => {
-    const file  = fileInput.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
+// fileInput.addEventListener("change", () => {
+//     const file  = fileInput.files[0];
+//     if (!file) return;
+//     const reader = new FileReader();
+//     reader.onload = (e) => {
 
-        const base64String = e.target.result.split(",")[1];
-        userData.file = {
-            data : base64String,
-            mime_type : file.type
-        } 
-        const messageContent = `
-            <div class="message-text">
-                <img src="${e.target.result}" alt="Uploaded image" style="max-width: 200px; border-radius: 10px;">
-            </div>`;
-        const outGoingMessage = createMessageElement(messageContent, "user-message");
-        chatBody.appendChild(outGoingMessage);
-        chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
+//         const base64String = e.target.result.split(",")[1];
+//         userData.file = {
+//             data : base64String,
+//             mime_type : file.type
+//         } 
+//         const messageContent = `
+//             <div class="message-text">
+//                 <img src="${e.target.result}" alt="Uploaded image" style="max-width: 200px; border-radius: 10px;">
+//             </div>`;
+//         const outGoingMessage = createMessageElement(messageContent, "user-message");
+//         chatBody.appendChild(outGoingMessage);
+//         chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
 
-        // Clear file input
-        fileInput.value = "";
-    }
-    reader.readAsDataURL(file);
-    // console.log(file); 
-});
+//         // Clear file input
+//         fileInput.value = "";
+//     }
+//     reader.readAsDataURL(file);
+//     // console.log(file); 
+// });
 
 sendMessageButton.addEventListener("click", (e) => handleOutGoingMessage(e)); 
 
-document.querySelector("#file-upload").addEventListener("click", () => fileInput.click());
+// document.querySelector("#file-upload").addEventListener("click", () => fileInput.click());
 
 
 
