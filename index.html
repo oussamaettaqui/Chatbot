@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+
+</head>
+<body>
+    <div class="chatbot-popup">
+
+        <div class="chat-header">
+            <div class="header-info">
+                <i class="fa-solid fa-robot fa-1x robot"></i>
+                <h2 class="logo-text">Chatbot</h2>
+            </div>
+            <button id="close-chatbot" class="material-symbols-rounded">keyboard_arrow_down</button>
+        </div>
+
+        <div class="chat-body">
+            <div class="message bot-message">
+                <i class="fa-solid fa-robot fa-1x bot-avatar"></i>
+                <div class="message-text">
+                    Hey there <br /> how can i help you today ?
+                </div>
+            </div>
+            <div class="message user-message">
+                <!-- <div class="message-text">
+                   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque repellat animi ut totam mollitia .
+                </div> -->
+            </div>
+            <div class="message bot-message thinking">
+                <!-- <i class="fa-solid fa-robot fa-1x bot-avatar"></i>
+                <div class="message-text">
+                    <div class="thinking-indcator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                     </div>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="chat-footer">
+            <form action="#" class="chat-form">
+                <textarea placeholder="Message..." class="message-input" required autofocus></textarea>
+                <div class="chat-controls">
+                    <button type="button" class="material-symbols-rounded">sentiment_satisfied</button>
+                    <div class="file-upload-wrapper">
+                        <input type="file" name="" id="file-input" hidden accept="images/*">
+                        <button type="button" id="file-upload" class="material-symbols-rounded">attach_file</button>
+                    </div>
+                    <button type="submit" id="send-message" class="material-symbols-rounded">arrow_upward</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+
+<!-- hey can you give me a code of alert in js  -->
