@@ -2,7 +2,7 @@
 
 A modern, responsive web-based chatbot powered by Google's Gemini AI. This chatbot features a clean, intuitive interface with real-time message handling and emoji support.
 
-![ChatBot Preview](/path/to/your/screenshot.png)
+![ChatBot Preview](/assets/Screenshot.png)
 
 ## Features
 
@@ -30,7 +30,8 @@ A modern, responsive web-based chatbot powered by Google's Gemini AI. This chatb
 ### Prerequisites
 
 - A modern web browser
-- Google Gemini API key
+- Google Gemini API key (Get it from [Google AI Studio](https://makersuite.google.com/app/apikey))
+- A local development server (e.g., Live Server VS Code extension)
 
 ### Installation
 
@@ -41,22 +42,27 @@ cd chatbot
 ```
 
 2. Set up your API key:
-   - Get an API key from Google's Gemini platform
-   - Replace the `API_KEY` constant in `script.js` with your key:
+   - Rename `config.env.tmp.js` to `config.env.js`
+   - Open `config.env.js` and replace `your-api-key` with your actual Gemini API key:
 ```javascript
-const API_KEY = "YOUR_API_KEY_HERE";
+const config = {
+    GEMINI_API_KEY: "your-api-key-here"
+};
+
+window.env = config;
 ```
 
-3. Open `index.html` in your web browser or serve it using a local development server.
 
 ### Project Structure
 
 ```
 chatbot/
-├── index.html          # Main HTML file
-├── style.css          # Styles and animations
-├── script.js          # Core functionality
-└── README.md          # Documentation
+├── config.env.js         # Your API configuration (not committed)
+├── config.env.tmp.js     # Template for API configuration
+├── index.html           # Main HTML file
+├── style.css           # Styles and animations
+├── script.js           # Core functionality
+└── README.md           # Documentation
 ```
 
 ## Usage
@@ -69,5 +75,32 @@ chatbot/
 4. Use the emoji picker to add emojis to your messages
 5. Close the chat window using the down arrow or the chat icon
 
+## Security Notes
+
+- The `config.env.js` file contains your API key and should never be committed to version control
+- The template file (`config.env.tmp.js`) is safe to commit as it doesn't contain any sensitive information
+- For production deployment, consider using a backend server to handle API keys more securely
+
+## Development
+
+To modify the chatbot:
+- Colors and theme can be customized in the `:root` variables in `style.css`
+- Chat behavior can be modified in `script.js`
+- UI structure can be adjusted in `index.html`
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 
+
+## Acknowledgments
+
+- Google Gemini API for powering the chat responses
+- Emoji Mart for the emoji picker implementation
+- Font Awesome for the icon set
+- Material Symbols for additional icons
