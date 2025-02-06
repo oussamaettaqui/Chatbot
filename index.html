@@ -12,7 +12,8 @@
 </head>
 <body>
     <div class="start-chat">
-        
+        <span class="material-symbols-rounded ">mode_comment</span>
+        <span class="material-symbols-rounded ">close</span>
     </div>
     <div class="chatbot-popup">
 
@@ -52,19 +53,16 @@
             <form action="#" class="chat-form">
                 <textarea placeholder="Message..." class="message-input" required autofocus></textarea>
                 <div class="chat-controls">
-                    <button type="button" class="material-symbols-rounded">sentiment_satisfied</button>
-                    <!-- <div class="file-upload-wrapper">
-                        <input type="file" name="" id="file-input" hidden accept="images/*">
-                        <button type="button" id="file-upload" class="material-symbols-rounded">attach_file</button>
-                    </div> -->
+                    <button type="button" id="emoji-picker" class="material-symbols-rounded">sentiment_satisfied</button>
+                  
                     <button type="submit" id="send-message" class="material-symbols-rounded">arrow_upward</button>
                 </div>
             </form>
         </div>
     </div>
     
+    <script src="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.js"></script>
+
     <script src="script.js"></script>
 </body>
 </html>
-
-<!-- hey can you give me a code of alert in js  -->

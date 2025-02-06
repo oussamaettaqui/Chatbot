@@ -1,14 +1,11 @@
 const chatBody = document.querySelector(".chat-body");
 const messageInput = document.querySelector(".message-input");
 const sendMessageButton = document.querySelector("#send-message");
-// const fileInput = document.querySelector("#file-input");
 const startChat = document.querySelector(".start-chat");
 const chatBotPopUp = document.querySelector(".chatbot-popup");
+const closeChatBot = document.querySelector("#close-chatbot");
 
-startChat.addEventListener("click", () => {
-    chatBotPopUp.style.display = "block";
-    startChat.style.display = "none";
-})
+
 
 const userData = {
     message : null,
@@ -18,6 +15,8 @@ const userData = {
     }
 }
 
+const chatHistory = [];
+const initialHieght = messageInput.scrollHeight;
 const API_KEY = "AIzaSyCVy2BPd7IIQNbLjwe3U13O1X7YpPPFb-Q";
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
@@ -32,30 +31,30 @@ const createMessageElement = (content, ...classes) => {
 
 const generateBotRespose = async(inComingMessage) => {
     const messageElement = inComingMessage.querySelector(".message-text");
+    chatHistory.push({
+        role: "user",
+        parts: [{ text: userData.message }]
+    });
     const requestOptions = {
         method : "POST",
         headers : { "Content-Type" : "application/json" },
         body : JSON.stringify({
-            contents: [{
-               
-                parts: [
-                    { text: userData.message }, ...(userData.file.data ? [{ inline_data: userData.file }] : [])
-                ]
-            }]
+            contents: chatHistory
         })
     }
     try{
         const response =  await fetch(API_URL, requestOptions);
         const data = await response.json();
         if (!response.ok) throw new Error(data.error.message);
-            // console.log(data);
 
         const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim()|| 'Sorry, I could not process that.';
         messageElement.innerText = apiResponseText;
-        // console.log(messageElement);
+        chatHistory.push({
+            role: "model",
+            parts: [{ text: apiResponseText }]
+        });
 
     }catch(error){
-        console.log("hhhhhhhhhhhhhhhhhhhh");
         messageElement.innerText = error.message;
         messageElement.style.color = "#ff0000";
     }finally{
@@ -69,6 +68,9 @@ const handleOutGoingMessage = (e) => {
     e.preventDefault();
     userData.message = messageInput.value.trim();
     messageInput.value = "";
+
+    messageInput.dispatchEvent(new Event("input"));
+
     const messageContent = `<div class="message-text"></div>`;
     const outGoingMessage = createMessageElement(messageContent, "user-message");
     outGoingMessage.querySelector(".message-text").textContent = userData.message;
@@ -93,7 +95,7 @@ const handleOutGoingMessage = (e) => {
 
 messageInput.addEventListener("keydown", (e) => {
     const userMessage = e.target.value.trim();
-    if (e.key === "Enter" && userMessage)
+    if (e.key === "Enter" && userMessage && !e.shiftKey && window.innerWidth > 768)
     {
         e.preventDefault();
         handleOutGoingMessage(e);
@@ -101,37 +103,38 @@ messageInput.addEventListener("keydown", (e) => {
 
 });
 
-// fileInput.addEventListener("change", () => {
-//     const file  = fileInput.files[0];
-//     if (!file) return;
-//     const reader = new FileReader();
-//     reader.onload = (e) => {
+messageInput.addEventListener("input", () => {
+    messageInput.style.hieght = `${initialHieght}px`;
+    messageInput.style.hieght = `${messageInput.scrollHeight}px`;
+    document.querySelector(".chat-form").style.borderRadius = messageInput.scrollHeight > 
+    initialHieght ? "15px" : "32px";
+});
 
-//         const base64String = e.target.result.split(",")[1];
-//         userData.file = {
-//             data : base64String,
-//             mime_type : file.type
-//         } 
-//         const messageContent = `
-//             <div class="message-text">
-//                 <img src="${e.target.result}" alt="Uploaded image" style="max-width: 200px; border-radius: 10px;">
-//             </div>`;
-//         const outGoingMessage = createMessageElement(messageContent, "user-message");
-//         chatBody.appendChild(outGoingMessage);
-//         chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
+const picker = new EmojiMart.Picker({
+    theme: "light",
+    skinTonePosition: "none",
+    previewPosition: "none",
+    onEmojiSelect: (emoji) => {
+        const { slectionStart: start, selectionEnd: end } = messageInput;
+        messageInput.setRangeText(emoji.native, start, end, "end");
+        messageInput.focus();
+    },
+    onClickOutside : (e) => {
+        if (e.target.id === "emoji-picker"){
+            document.body.classList.toggle("show-emoji-picker");
+        }
+        else{
+            document.body.classList.remove("show-emoji-picker");
+        }
+    }
+});
 
-//         // Clear file input
-//         fileInput.value = "";
-//     }
-//     reader.readAsDataURL(file);
-//     // console.log(file); 
-// });
+document.querySelector(".chat-form").appendChild(picker);
 
 sendMessageButton.addEventListener("click", (e) => handleOutGoingMessage(e)); 
 
-// document.querySelector("#file-upload").addEventListener("click", () => fileInput.click());
+startChat.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
 
-
-
+closeChatBot.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
 
 

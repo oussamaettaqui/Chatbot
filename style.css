@@ -8,32 +8,67 @@
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+   
     min-height: 100vh;
     background: linear-gradient(#EEEEFF,  #C8C7FF);
-    position: relative;
+    /* position: relative; */
 }
 
 .start-chat{
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
+    position: fixed;
+    bottom: 30px;
+    right: 35px;
+    border: none;
     width: 50px;
     height: 50px;
-    background: #3d39ac;
+    cursor: pointer;
+    background: #5350C4;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
 }
+
+
+body.show-chatbot .start-chat{
+    transform: rotate(90deg);
+}
+
+.start-chat span{
+    position: absolute;
+    color: #fff;
+}
+
+body.show-chatbot .start-chat span:first-child,
+.start-chat span:last-child{
+    opacity: 0;
+}
+
+body.show-chatbot .start-chat span:last-child{
+    opacity: 1;
+}
+
 .chatbot-popup{
-    display: none;
-    position: relative;
+    position: fixed;
+    right: 35px;
+    bottom: 90px;
     width: 420px;
     background: #FFFFFF;
     border-radius: 15px;
     overflow: hidden;
+    opacity: 0;
+    transform: scale(0.2);
+    transform-origin: bottom right;
+    pointer-events: none;
     box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1), 0 32px 64px -48px rgba(0, 0, 0, 0.5);
+    transition: all 0.1s ease;
+}
 
+body.show-chatbot .chatbot-popup{
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
 }
 
 .chat-header{
@@ -109,8 +144,6 @@ body {
     overflow-x: hidden;
     margin-bottom: 80px;
     flex-direction: column;
-    /* scrollbar-width: thin;
-    scrollbar-color: #ccccf5 transparent; */
 }
 
 
@@ -212,6 +245,7 @@ body {
 
 .chat-footer .chat-form{
     display: flex;
+    position: relative;
     align-items: center;
     background: #fff;
     border-radius: 32px;
@@ -224,12 +258,10 @@ body {
 
 .chat-form .message-input::-webkit-scrollbar {
     width: 6px;
-    /* width of the entire scrollbar */
 }
 
 .chat-form .message-input::-webkit-scrollbar-track {
     background: transparent;
-    /* color of the tracking area */
     border-radius: 10px;
 }
 
@@ -243,6 +275,8 @@ body {
     outline: none;
     height: 47px;
     width: 100%;
+    max-height: 180px;
+    white-space: pre-line;
     font-size: 0.95rem;
     padding: 12px 0 13px 18px;
     border-radius: inherit;
@@ -288,4 +322,48 @@ body {
 .chat-form .chat-controls button:hover{
     background-color: #f1f1ff;
     transition: 0.2s ease;
+}
+
+em-emoji-picker{
+    position: absolute;
+    left: 50%;
+    top: -337px;
+    width: 100%;
+    max-width: 350px;
+    max-height: 330px ;
+    transform: translateX(-50%);
+    visibility: hidden;
+}
+
+body.show-emoji-picker em-emoji-picker{
+    visibility: visible;
+
+}
+
+
+@media (max-width: 520px) {
+   .start-chat{
+    right: 20px;
+    bottom: 20px;
+   } 
+    
+   .chatbot-popup{
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    border-radius: 0;
+    width: 100%;
+   }
+
+   .chatbot-popup .chat-header{
+    padding: 12px 15px;
+   }
+   .chat-body{
+    height: calc(90% - 55px);
+    padding: 25px 15px;
+   }
+   .chat-footer{
+    padding: 10px 15px 15px;
+   }
+
 }
