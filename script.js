@@ -17,8 +17,9 @@ const userData = {
 
 const chatHistory = [];
 const initialHieght = messageInput.scrollHeight;
-const API_KEY = "AIzaSyCVy2BPd7IIQNbLjwe3U13O1X7YpPPFb-Q";
+const API_KEY = window.env.GEMINI_API_KEY;
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+
 
 
 const createMessageElement = (content, ...classes) => {
